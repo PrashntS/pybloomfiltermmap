@@ -15,7 +15,7 @@ The goal of `pybloomfiltermmap3` is simple: to provide a fast, simple, scalable,
 
 There are a couple reasons to use this module:
 
-* It natively uses [mmaped files](http://en.wikipedia.org/wiki/Mmap).
+* It natively uses [mmapped files](http://en.wikipedia.org/wiki/Mmap).
 * It is fast (see [benchmarks](http://axiak.github.io/pybloomfiltermmap/#benchmarks)).
 * It natively does the set things you want a Bloom filter to do.
 
@@ -38,10 +38,21 @@ interface and an ste interface. As an example:
 
 To create an in-memory filter, simply omit the file location:
 ```python
-    >>> cakes = pybloomfilter.BloomFilter(10000, 0.1)
+    >>> fruit2 = pybloomfilter.BloomFilter(10000, 0.1)
+    >>> fruit2.add('apple')
+    >>> 'apple' in fruit2
+    True
 ```
-*Caveat*: it is currently not possible to persist this filter later.
 
+These in-memory filters can be pickled and reloaded:
+```python
+    >>> import pickle
+    >>> data = pickle.dumps(fruit2)
+    >>> fruit3 = pickle.loads(data)
+    >>> 'apple' in fruit3
+    True
+```
+*Caveat*: it is currently not possible to persist this filter later as an mmap file.
 
 ## Docs
 
